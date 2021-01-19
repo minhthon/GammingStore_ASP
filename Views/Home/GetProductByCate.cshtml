@@ -1,0 +1,248 @@
+﻿@model DoAnASP.Areas.Admin.Models.Product
+<div class="modal fade" id="details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width:1080px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thông tin sản phẩm </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Tên sản phẩm</p>
+                <p style="font-size:18px;text-align:center;color:black" name="name_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Giá</p>
+                <p style="font-size:18px;text-align:center;color:black" name="price_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Phân loại</p>
+                <p style="font-size:18px;text-align:center;color:black" name="classify_details"></p>
+
+
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Hình ảnh</p>
+
+                <div class="container">
+                    <p name="img_details"></p>
+                    <p name="imgone_details"></p>
+                    <p name="imgtwo_details"></p>
+                </div>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Trạng thái</p>
+                <p style="font-size:18px;text-align:center;color:black" name="status_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Nhà sản xuất</p>
+                <p style="font-size:18px;text-align:center;color:black" name="producer_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Thời gian bảo hành</p>
+                <p style="font-size:18px;text-align:center;color:black" name="warrantyperiod_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Nguồn góc xuất xứ</p>
+                <p style="font-size:18px;text-align:center;color:black" name="origin_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">CPU</p>
+                <p style="font-size:18px;text-align:center;color:black" name="cpu_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">RAM</p>
+                <p style="font-size:18px;text-align:center;color:black" name="ram_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">VGA</p>
+                <p style="font-size:18px;text-align:center;color:black" name="vga_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Ổ đĩa</p>
+                <p style="font-size:18px;text-align:center;color:black" name="harddrive_details"></p>
+
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Màn hình</p>
+                <p style="font-size:18px;text-align:center;color:black" name="display_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Kết nối</p>
+                <p style="font-size:18px;text-align:center;color:black" name="connector_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Âm thanh</p>
+                <p style="font-size:18px;text-align:center;color:black" name="audio_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Wifi</p>
+                <p style="font-size:18px;text-align:center;color:black" name="wifi_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Bluetooth</p>
+                <p style="font-size:18px;text-align:center;color:black" name="bluetooth_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Pin</p>
+                <p style="font-size:18px;text-align:center;color:black" name="battery_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Cân nặng</p>
+                <p style="font-size:18px;text-align:center;color:black" name="weight_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Màu sắc</p>
+                <p style="font-size:18px;text-align:center;color:black" name="color_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Kích thước</p>
+                <p style="font-size:18px;text-align:center;color:black" name="size_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Thông tin</p>
+                <p style="font-size:18px;text-align:center;color:black" name="description_details"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="left-sidebar">
+                    <h2>Danh mục sản phẩm </h2>
+                    <div class="panel-group category-products" id="accordian">
+                        <!--category-products-->
+                        @foreach (var item in @ViewBag.ListCategory)
+                        {
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title"><a asp-action="GetProductByCate" asp-controller="Home" asp-route-id="@item.IDCategory">@item.CategoryName</a></h4>
+                                </div>
+                            </div>
+                        }
+                    </div><!--/category-products-->
+                    <div class="brands_products">
+                        <!--brands_products-->
+                        <h2>Sản phẩm</h2>
+                        <div class="brands-name">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a asp-action="GetProductByClassify" asp-controller="Home" asp-route-id="Laptop Gaming">Laptop Gaming</a></li>
+                            </ul>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a asp-action="GetProductByClassify" asp-controller="Home" asp-route-id="Laptop Văn Phòng">Laptop Văn Phòng</a></li>
+                            </ul>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a asp-action="GetProductByClassify" asp-controller="Home" asp-route-id="Laptop Doanh Nhân">Laptop Doanh Nhân</a></li>
+                            </ul>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a asp-action="GetProductByClassify" asp-controller="Home" asp-route-id="Macbook">Macbook</a></li>
+                            </ul>
+                        </div>
+                    </div><!--/brands_products-->
+                </div>
+            </div>
+            <div class="col-sm-9 padding-right">
+                <div class="features_items">
+                    <!--features_items-->
+                    <h2 class="title text-center">Sản phẩm</h2>
+                    @{ string[] hinh;
+                        foreach (Product item in ViewBag.ListProduct)
+                        {
+                            <div class="col-sm-3">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            @{
+                                                try
+                                                {
+                                                    if (item.Image != null)
+                                                    {
+                                                        hinh = item.Image.ToString().Split(" ");
+
+                                                        <img src="~/Image/ImageProduct/@Html.DisplayFor(ModelItem=>hinh[0])" width="200px" height="100px" />
+
+                                                    }
+                                                }
+                                                catch { }
+                                            }
+                                            <h2>@item.Price VNĐ</h2>
+                                            <p>@item.ProductName</p>
+                                        </div>
+                                        <div class="product-overlay">
+                                            <div class="overlay-content">
+                                                <h2>@item.Price VNĐ</h2>
+                                                <p>@item.ProductName</p>
+                                                <a asp-route="addcart"
+                                                   asp-route-productid="@item.IDProduct"
+                                                   class="btn btn-secondary btn-sm float-right">Đặt hàng</a>
+                                                <button data-id="@item.IDProduct" name="btn_details" data-name="@item.ProductName" class="btn btn-default show_details" data-toggle="modal" data-target="#details"><i class="fa fa-asterisk" aria-hidden="true"></i>Chi tiết sản phẩm</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div><!--/features_items-->
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                method: "GET",
+                url: "../api/LoadViewAPI/GetProduct/",
+                contentType: 'application/json; charset=UTF-8',
+                data: JSON.stringify({
+
+                })
+            })
+                .done(function (msg) {
+                    console.log(msg);
+                });
+
+        });
+
+    </script>
+    <script>
+        $('button[name=btn_details]').click(function () {
+            var id = $(this).attr('data-id');
+            $.ajax({
+                method: "GET",
+                url: "/api/Product_API/GetProduct/" + id,
+                contentType: 'application/json; charset=UTF-8',
+
+            })
+
+                .done(function (msg) {
+                    console.log(msg);
+                    image = msg.image.split(" ");
+
+                    $('p[name=name_details]').html(msg.productName);
+                    $('p[name=price_details]').html(msg.price);
+                    $('p[name=classify_details]').html(msg.classify);
+                    $('p[name=producer_details]').html(msg.producer);
+                    $('p[name=warrantyperiod_details]').html(msg.warrantyPeriod);
+                    $('p[name=origin_details]').html(msg.origin);
+                    $('p[name=cpu_details]').html(msg.cpu);
+                    $('p[name=ram_details]').html(msg.ram);
+                    $('p[name=vga_details]').html(msg.vga);
+                    $('p[name=harddrive_details]').html(msg.hard_drive);
+                    $('p[name=display_details]').html(msg.display);
+                    $('p[name=connector_details]').html(msg.connector);
+                    $('p[name=audio_details]').html(msg.audio);
+                    $('p[name=wifi_details]').html(msg.wifi);
+                    $('p[name=bluetooth_details]').html(msg.bluetooth);
+                    $('p[name=battery_details]').html(msg.battery);
+                    $('p[name=weight_details]').html(msg.weight);
+                    $('p[name=color_details]').html(msg.color);
+                    $('p[name=size_details]').html(msg.size);
+                    $('p[name=description_details]').html(msg.description);
+                    if (msg.status == 1) {
+                        $('p[name=status_details]').html("Hiện");
+                    }
+                    else {
+                        $('p[name=status_details]').html("Ẩn");
+                    }
+
+                    $('p[name=img_details]').html('<img style="width:720px; margin-left: auto;margin-right: auto;display: block;" src="/Image/ImageProduct/' + image[0] + '"' + ' /> ');
+                    $('p[name=imgone_details]').html('<img style="width:720px; margin-left: auto;margin-right: auto;display: block;" src="/Image/ImageProduct/' + image[1] + '"' + ' /> ');
+                    $('p[name=imgtwo_details]').html('<img style="width:720px; margin-left: auto;margin-right: auto;display: block;" src="/Image/ImageProduct/' + image[2] + '"' + ' /> ');
+
+
+                });
+        })
+    </script>
+
+}
+
+

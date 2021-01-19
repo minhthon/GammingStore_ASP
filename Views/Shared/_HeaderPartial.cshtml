@@ -1,0 +1,177 @@
+﻿
+<header id="header">
+    <!--header-->
+    <div class="header_top">
+        <!--header_top-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="contactinfo">
+                        <!-- 	<ul class="nav nav-pills">
+                                <li><a href="#"><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
+                                <li><a href="#"><i class="fa fa-envelope"></i> info@domain.com</a></li>
+                            </ul> -->
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="social-icons pull-right">
+                        <ul class="nav navbar-nav">
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--/header_top-->
+
+    <div class="header-middle">
+        <!--header-middle-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="logo pull-left">
+                        <a asp-action="Index" asp-controller="Home"><img src="~/Use/images/logo.png" alt="" /></a>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="shop-menu pull-right">
+                        <ul class="nav navbar-nav">
+
+                            <li><a href=""><i class="fa fa-crosshairs"></i> Thanh toán</a></li>
+
+                            <li><a href="/Product_Cart"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
+                            <li class="dropdown">
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                    <img alt="" src="~/Use/images/user.png" class="img_avatar">
+                                    <span class="username">
+                                        @ViewBag.UserName
+                                    </span>
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu extended logout">
+                                    @if (ViewBag.UserName != null)
+                                    {
+                                        <li><a asp-action="Logout" asp-controller="Login"><i class="fa fa-key"></i>Đăng xuất</a></li>
+                                        <li><a asp-action="Index" asp-controller="Payments"><i class="fa fa-cart"></i> Đơn hàng của tôi</a></li>
+
+                                    }
+                                    else
+                                    {
+                                        <li><a asp-action="Index" asp-controller="Login"><i class="fa fa-key"></i> Đăng nhập</a></li>
+                                    }
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--/header-middle-->
+
+    <div class="header-bottom">
+        <!--header-bottom-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="mainmenu pull-left">
+                        <ul class="nav navbar-nav collapse navbar-collapse">
+                            <li><a asp-action="Index" asp-controller="Home" class="active">Trang chủ</a></li>
+                            <li class="dropdown">
+                                <a href="">Sản phẩm<i class="fa fa-angle-down"></i></a>
+                                <ul role="menu" class="sub-menu">
+                                    <li><a asp-action="GetProductByClassify" asp-controller="Home" asp-route-id="Laptop Gaming">Laptop Gaming</a></li>
+                                    <li><a asp-action="GetProductByClassify" asp-controller="Home" asp-route-id="Laptop Văn Phòng">Laptop Văn Phòng</a></li>
+                                    <li><a asp-action="GetProductByClassify" asp-controller="Home" asp-route-id="Laptop Doanh Nhân">Laptop Doanh Nhân</a></li>
+                                    <li><a asp-action="GetProductByClassify" asp-controller="Home" asp-route-id="Macbook">Macbook</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="">Danh mục<i class="fa fa-angle-down"></i></a>
+                                <ul role="menu" class="sub-menu">
+                                    @foreach (var item in @ViewBag.ListCategory)
+                                    {
+                                        <li><a asp-action="GetProductByCate" asp-controller="Home" asp-route-id="@item.IDCategory">@item.CategoryName</a></li>
+                                    }
+                                </ul>
+                            </li>
+                            <li><a href="">Giỏ hàng</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <form asp-action="GetProductByName" asp-controller="Home" method="post">
+                        <div class="search_box pull-right">
+                            <input type="text" name="key_word" placeholder="Tìm kiếm sản phẩm" />
+                            <input type="submit" name="search_item" class="btn btn-default search" value="Tìm kiếm" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div><!--/header-bottom-->
+</header><!--/header-->
+<section id="slider">
+    <!--slider-->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="slider-carousel" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#slider-carousel" data-slide-to="1"></li>
+                        <li data-target="#slider-carousel" data-slide-to="2"></li>
+                    </ol>
+
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <div class="col-sm-3">
+                                <h1><span>E</span>-SHOPPER</h1>
+                            </div>
+                            <div class="col-sm-8">
+                                <img src="~/Use/images/banner1.jpg" class="girl img-responsive" alt="" />
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="col-sm-3">
+                                <h1><span>E</span>-SHOPPER</h1>
+                            </div>
+                            <div class="col-sm-8">
+                                <img src="~/Use/images/banner2.jpg" class="girl img-responsive" alt="" />
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <div class="col-sm-3">
+                                <h1><span>E</span>-SHOPPER</h1>
+                            </div>
+                            <div class="col-sm-8">
+                                <img src="~/Use/images/banner3.jpg" class="girl img-responsive" alt="" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section><!--/slider-->

@@ -1,0 +1,92 @@
+﻿
+<div class="container">
+    <header class="header fixed-top clearfix">
+        <!--logo start-->
+        <div class="brand">
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="logo">
+                Quản lý
+            </a>
+            <div class="sidebar-toggle-box">
+                <div class="fa fa-bars"></div>
+            </div>
+        </div>
+        <!--logo end-->
+        <div class="top-nav clearfix">
+            <!--search & user info start-->
+            <ul class="nav pull-right top-menu">
+                <li>
+                    <input type="text" class="form-control search" placeholder=" Search">
+                </li>
+                <!-- user login dropdown start-->
+                <li class="dropdown">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <img alt="" src="~/Admin/images/user.png">
+                        <span class="username">@ViewBag.Name</span>
+                    </a>
+                    <ul class="dropdown-menu extended logout">
+                        <li><a href="#"><i class=" fa fa-suitcase"></i>Hồ sơ</a></li>
+                        <li><a href="#"><i class="fa fa-cog"></i> Cài đặt</a></li>
+                        <li><a asp-area="Admin" asp-action="Logout" asp-controller="Login"><i class="fa fa-key"></i> Đăng xuất</a></li>
+                    </ul>
+                </li>
+                <!-- user login dropdown end -->
+            </ul>
+            <!--search & user info end-->
+        </div>
+    </header>
+</div>
+<section id="container">
+    <!--header start-->
+    <!--header end-->
+    <!--sidebar start-->
+    <aside>
+        <div id="sidebar" class="nav-collapse">
+            <!-- sidebar menu start-->
+            <div class="leftside-navigation">
+                <ul class="sidebar-menu" id="nav-accordion">
+                    <li>
+                        <a class="active" asp-area="Admin" asp-controller="Home" asp-action="Index">
+                            <i class="fa fa-dashboard"></i>
+                            <span>Bảng điều khiển</span>
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a asp-area="Admin" asp-controller="Accounts" asp-action="Index">
+                            <i class="fa fa-user"></i>
+                            <span>Tài khoản</span>
+                        </a>
+
+                    </li>
+                    <li class="sub-menu">
+                        <a asp-area="Admin" asp-controller="Payments" asp-action="Index">
+                            <i class="fa fa-user"></i>
+                            <span>Đơn hàng</span>
+                        </a>
+
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-book"></i>
+                            <span>Danh mục</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a asp-area="Admin" asp-controller="Categories" asp-action="Index">Danh mục sản phẩm</a></li>
+                        </ul>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-product-hunt"></i>
+                            <span>Sản phẩm</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a asp-area="Admin" asp-controller="Products" asp-action="Index">Sản phẩm</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- sidebar menu end-->
+        </div>
+    </aside>
+
+</section>
+

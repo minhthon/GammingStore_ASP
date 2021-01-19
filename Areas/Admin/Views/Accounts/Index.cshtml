@@ -1,0 +1,245 @@
+﻿@model DoAnASP.Areas.Admin.Models.Account
+@{
+    ViewData["Title"] = "Tài khoản";
+}
+
+<!--Modal thong bao cap nhap trang thai-->
+<div class="modal fade" id="ms_updatestatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="modal-title" id="message"></p>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+          
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*modal hiển thị thông tin *@
+<div class="modal fade" id="details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thông tin tài khoản </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Email</p>
+                <p style="font-size:18px;text-align:center;color:black" name="email_details"></p>
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Họ tên</p>
+                <p style="font-size:18px;text-align:center;color:black" name="name_details"></p>
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Số điện thoại</p>
+                <p style="font-size:18px;text-align:center;color:black" name="phone_details"></p>
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Địa chỉ</p>
+                <p style="font-size:18px;text-align:center;color:black" name="address_details"></p>
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Vai trò</p>
+                <p style="font-size:18px;text-align:center;color:black" name="role_details"></p>
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Trạng thái</p>
+                <p style="font-size:18px;text-align:center;color:black" name="status_details"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*kết thúc modal hiển thị thông tin*@
+<p>
+    <a asp-action="Index">Tạo mới</a>
+</p>
+<section id="main-content">
+    <section class="wrapper">
+        <div style=" margin-bottom: 20px;" id="main-bottom" class="container main-bottom">
+            <div class="main-left-inner-fixed">
+                <partial name="Create" />
+            </div>
+        </div>
+        <div class="container">
+            <button type="button" class="button-toggle btn btn-outline-success btn-block" onClick="hiddenMainLeft();">
+                Hiện bảng thông tin để đăng nhập và chỉnh sửa
+            </button>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Họ tên
+                    </th>
+                    <th>
+                        Số điện thoại
+                    </th>
+                    <th>
+                        Địa chỉ
+                    </th>
+                    <th>
+                        Vai trò
+                    </th>
+                    <th>
+                        Trạng thái
+                    </th>
+                    <th>Chức năng</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Account item in ViewBag.ListAccount)
+                {
+                    <tr id="@item.Email">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhoneNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Role)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            <a style="width:100px" class="btn btn-outline-primary" asp-action="Index" asp-route-id="@item.Email">Chỉnh sửa</a>
+                            <button style="width:100px" class="btn btn-outline-warning" name="btn_update_status" data-email="@item.Email" data-status="@(item.Status==true? 0:1)" >
+                                @if (item.Status == true)
+                                {
+                                    @:Ẩn
+                                }
+                                else
+                                {
+                                    @:Hiện
+                                }
+                            </button>
+                            <button style="width:100px" class="btn btn-outline-danger" data-email="@item.Email" name="btn_delete" data-name="@item.Name" data-toggle="modal" data-target="#exampleModal">
+
+                                @{
+                                    @:Xóa
+                                }
+
+                            </button>
+                            <button style="width:100px" class="btn btn-outline-success" data-email="@item.Email" name="btn_details" data-name="@item.Name" data-toggle="modal" data-target="#details" onclick=test()>
+
+                                @{
+                                    @:Thông tin
+                                }
+                            </button>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </section>
+</section>
+@section Scripts{
+
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script>
+        function hiddenMainLeft() {
+            var hidden = document.getElementById('main-bottom');
+            if (hidden.style.display === 'none') hidden.style.display = 'block';
+            else hidden.style.display = 'none';
+        }
+        //script lấy thông tin danh mục
+        $('button[name=btn_details]').click(function () {
+            var email = $(this).attr('data-email');
+            $.ajax({
+                method: "GET",
+                url: "../api/Accounts_API/GetAccount/" + email,
+                contentType: 'application/json; charset=UTF-8',
+                data: JSON.stringify({
+                    "Email": email
+                })
+            })
+
+                .done(function (msg) {
+                    $('p[name=email_details]').html(msg.email);
+                    $('p[name=name_details]').html(msg.name);
+                    $('p[name=phone_details]').html(msg.phoneNumber);
+                    $('p[name=address_details]').html(msg.address);
+                    $('p[name=role_details]').html(msg.role);
+                    if (msg.status == true) {
+                        $('p[name=status_details]').html('Hiện');
+                    }
+                    else {
+                        $('p[name=status_details]').html('Ẩn');
+
+                    }
+                });
+
+
+        })
+        //script thay đổi trạng thái danh mục
+        $('button[name=btn_update_status]').click(function () {
+            var email = $(this).attr('data-email');
+            var stt = ($(this).attr('data-status') == 0 ? false : true)
+            $.ajax({
+                method: "POST",
+                url: "../api/Accounts_API/UpdateStatus/",
+                contentType: 'application/json; charset=UTF-8',
+                data: JSON.stringify({
+                    "Email": email,
+                    "Status": stt
+                })
+            })
+                .done(function (msg) {
+                    if (msg == '0') {
+                        alert('Cập nhật trạng thái thất bại');
+                    }
+                    else {
+                        var r = JSON.parse(msg);                     
+                        if (r.stt == 'True') {
+                            $('button[name=btn_update_status][data-email='+ r.email + ']').html("Ẩn");
+                        }
+                        if (r.stt == 'False') {
+                            $('button[name=btn_update_status][data-email=' + r.email + ']').html("Hiện");
+                        }
+                        $('#ms_updatestatus').modal('show');
+                        $('p[id=message]').html('Thay đổi trạng thái danh mục thành công');
+
+
+                    }
+
+                });
+
+        })
+        //script xoa danh muc khoi he thong
+        $('button[name=btn_delete]').click(function () {
+            var email = $(this).attr('data-email');
+            var name = $(this).attr('data-name');
+            $.ajax({
+                method: "DELETE",
+                url: "../api/Accounts_API/DeleteAccount/" + email,
+                contentType: 'application/json; charset=UTF-8',
+                data: JSON.stringify({
+                    "Email": email
+                })
+            })
+                .done(function (msg) {
+                    if (msg == 'Success') {
+                        document.getElementById(email).remove();
+                        $('#ms_updatestatus').modal('show');
+                        $('p[id=message]').html('Xóa tài khoản thành công');
+                    }
+                    else {
+                        $('#ms_updatestatus').modal('show');
+                        $('p[id=message]').html('Xóa tài khoản không thành công');
+                    }
+                });
+        })
+</script>
+}

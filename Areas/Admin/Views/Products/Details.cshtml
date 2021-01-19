@@ -1,0 +1,162 @@
+﻿@model DoAnASP.Areas.Admin.Models.Product
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProductName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Image)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Image)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Classify)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Classify)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Producer)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Producer)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Origin)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Origin)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.WarrantyPeriod)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.WarrantyPeriod)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CPU)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CPU)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Ram)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Ram)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.VGA)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.VGA)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Hard_drive)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Hard_drive)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Display)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Display)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Connector)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Connector)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Audio)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Audio)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Wifi)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Wifi)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Bluetooth)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Bluetooth)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OperatingSystem)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OperatingSystem)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Battery)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Battery)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Weight)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Weight)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Color)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Color)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Size)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Size)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.IDProduct">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

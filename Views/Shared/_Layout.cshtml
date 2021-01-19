@@ -1,0 +1,17 @@
+﻿@{
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    @await Html.PartialAsync("_HeadPartial.cshtml")
+    @RenderSection("css", required: false)
+</head>
+<body>
+    @await Html.PartialAsync("_HeaderPartial.cshtml")
+    @RenderBody()
+    @await Html.PartialAsync("_FooterPartial.cshtml")
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+

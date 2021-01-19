@@ -1,0 +1,109 @@
+﻿@model DoAnASP.Areas.Admin.Models.Payment
+
+<section>
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IDUser)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PaymentMethod)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ShippingUnit)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Note)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Address)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Cart)
+                    </th>
+                     <th>Trạng thái đơn hàng</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Payment item in ViewBag.Payment)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IDUser)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PaymentMethod)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ShippingUnit)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Note)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>Chưa hoàn thành</td>
+                    @{
+
+                        if (item.Status == 0)
+                        {
+                            <td><p name="Status" data-id="@item.IDPayment">Đang xử lý</p></td>
+                            <td><button class="btn btn_primary"  id="@item.IDPayment" name="CancelOrther" data-id="@item.IDPayment" >Hủy đơn hàng</button   > </td>
+                        }
+                        if (item.Status == 1)
+                        {
+                            <td>Đang giao</td>
+                        }
+                        if (item.Status == 2)
+                        {
+                            <td>Đã hoàn thành</td>
+                        }
+                        if (item.Status == 3)
+                        {
+                            <td >Đã hủy</td>
+                        }
+                    }
+                   
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</section>
+@section Scripts{
+
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script>
+    $('button[name=CancelOrther]').click(function () {
+        var id = $(this).attr('data-id');
+       
+        $.ajax({
+            method: "POST",
+            url: "/api/Payment_API/UpdateStatusCancelOther/",
+            contentType: 'application/json; charset=UTF-8',
+            data: JSON.stringify({
+                "ID": id
+               
+            })
+        })
+            .done(function (msg) {
+                if (msg == 'Success') {
+                    alert('Đơn hàng đã được hủy');
+                    $('p[name=Status][data-id=' + id + ']').html('Đã hủy');
+                    document.getElementById(id).remove();
+                }
+                else {
+
+                    alert('Hủy đơn hàng thất bại');
+                }
+
+            });
+
+    })
+</script>
+}

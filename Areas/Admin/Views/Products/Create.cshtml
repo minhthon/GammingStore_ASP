@@ -1,0 +1,196 @@
+﻿@model DoAnASP.Areas.Admin.Models.Product
+
+@{
+    ViewData["Title"] = "Create";
+}
+<label class="display_label">@(ViewContext.RouteData.Values["id"] != null ? "Chỉnh sửa thông tin sản phẩm" : "Thêm sản phẩm")</label>
+
+<hr />
+<div class="row">
+    <form style="width:100%" enctype="multipart/form-data" asp-action="@(ViewContext.RouteData.Values["id"] != null ? "Edit" : "Create")" asp-route-id="@(ViewContext.RouteData.Values["id"] != null ? ViewContext.RouteData.Values["id"] : "")">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @{
+            if (ViewContext.RouteData.Values["id"] != null)
+            {
+                <input type="hidden" asp-for="IDProduct" />
+            }
+        }
+        <div class="form-group">
+            @{
+                if (ViewContext.RouteData.Values["id"] != null)
+                {
+                    string[] hinh = Model.Image.ToString().Split(" ");
+                    for (int i = 0; i < hinh.Length - 1 && i < 3; i++)
+                    {
+                        <div class="col-sm-4">
+                            <p class="p-details">Hình thứ @(i+1)</p>
+                            <img src="~/Image/ImageProduct/@Html.DisplayFor(model => hinh[i])" width="280px" height="240px" />
+                        </div>
+                    }
+                    <div class="form-group">
+                        <input asp-for="Image" class="form-control" type="hidden" />
+                        <p class="p-details">Hình ảnh mới</p>
+                        <div class="container js-file-list"></div>
+                    </div>
+                }
+
+            }
+        </div>
+        <div class="col-md-6">
+            <input type="hidden" asp-for="Status" value="1" class="form-control" />
+            <div class="form-group">
+                <label class="display_label" asp-for="ProductName" class="control-label"></label>
+                <input asp-for="ProductName" class="form-control" />
+                <span class="display_label" asp-validation-for="ProductName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="display_label" asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="custom-file">
+                <input class="custom-file-input ggg" asp-for="Image" type="file" name="ful" id="ful" multiple />
+                <label class="custom-file-label display_label" for="ful"> Choose file</label>
+            </div>
+
+
+            <div class="form-group">
+                <label class="display_label" asp-for="Quantity" class="control-label"></label>
+                <input asp-for="Quantity" class="form-control" />
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="display_label" asp-for="Producer" class="control-label"></label>
+                <input asp-for="Producer" class="form-control" />
+                <span asp-validation-for="Producer" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="display_label" asp-for="WarrantyPeriod" class="control-label"></label>
+                <input asp-for="WarrantyPeriod" class="form-control" />
+                <span asp-validation-for="WarrantyPeriod" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="display_label" asp-for="CPU" class="control-label"></label>
+                <input asp-for="CPU" class="form-control" />
+                <span asp-validation-for="CPU" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="display_label" asp-for="Ram" class="control-label"></label>
+                <input asp-for="Ram" class="form-control" />
+                <span asp-validation-for="Ram" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="display_label" asp-for="VGA" class="control-label"></label>
+                <input asp-for="VGA" class="form-control" />
+                <span asp-validation-for="VGA" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="display_label" asp-for="Hard_drive" class="control-label"></label>
+                <input asp-for="Hard_drive" class="form-control" />
+                <span asp-validation-for="Hard_drive" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="display_label" asp-for="Display" class="control-label"></label>
+                <input asp-for="Display" class="form-control" />
+                <span asp-validation-for="Display" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="display_label" asp-for="Connector" class="control-label"></label>
+                <input asp-for="Connector" class="form-control" />
+                <span asp-validation-for="Connector" class="text-danger"></span>
+            </div>
+
+        </div> <!--Đóng của col-md-6-->
+        <div class="col-md-6">
+
+            <div class="form-group">
+                <label class="display_label" asp-for="Audio" class="control-label"></label>
+                <input asp-for="Audio" class="form-control" />
+                <span asp-validation-for="Audio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="display_label" asp-for="Wifi" class="control-label"></label>
+                <input asp-for="Wifi" class="form-control" />
+                <span asp-validation-for="Wifi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="display_label" asp-for="Bluetooth" class="control-label"></label>
+                <input asp-for="Bluetooth" class="form-control" />
+                <span asp-validation-for="Bluetooth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="display_label" asp-for="OperatingSystem" class="control-label"></label>
+                <input asp-for="OperatingSystem" class="form-control" />
+                <span asp-validation-for="OperatingSystem" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="display_label" asp-for="Battery" class="control-label"></label>
+                <input asp-for="Battery" class="form-control" />
+                <span asp-validation-for="Battery" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="display_label" asp-for="Weight" class="control-label"></label>
+                <input asp-for="Weight" class="form-control" />
+                <span asp-validation-for="Weight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="display_label" asp-for="Color" class="control-label"></label>
+                <input asp-for="Color" class="form-control" />
+                <span asp-validation-for="Color" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="display_label" asp-for="Size" class="control-label"></label>
+                <input asp-for="Size" class="form-control" />
+                <span asp-validation-for="Size" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="display_label" asp-for="Origin" class="control-label"></label>
+                <br />
+                <select style="width: 100%;height: calc(1.5em + .75rem + 2px); " asp-for="Origin">
+                    <option value="Chính hãng">Chính hãng</option>
+                    <option value="Xách tay">Xách tay</option>
+                </select>
+                <span asp-validation-for="Origin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="display_label" asp-for="Classify" class="control-label"></label>
+                <select style="width: 100%;height: calc(1.5em + .75rem + 2px);" asp-for="Classify">
+                    <br />
+                    <option value="Laptop Gaming">Laptop Gaming</option>
+                    <option value="Laptop Văn Phòng">Laptop Văn Phòng</option>
+                    <option value="Laptop Doanh Nhân">Laptop Doanh Nhân</option>
+                    <option value="Macbook">Macbook</option>
+                </select>
+                <span asp-validation-for="Classify" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="display_label control-label">Danh mục sản phẩm</label>
+                <select style="width: 100%;height: calc(1.5em + .75rem + 2px);" asp-for="category" asp-items="@(new SelectList(ViewBag.ListCategory,"IDCategory","CategoryName"))" class="control-label"></select>
+                <span asp-validation-for="category" class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label class="display_label">Thông tin</label>
+            <textarea style="width:100%" id="ck" rows="10" name="Description" asp-for="Description"></textarea>
+
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="@(ViewContext.RouteData.Values["id"]!=null ?"Chỉnh sửa":"Tạo mới" )" class="btn btn-outline-primary btn-block" />
+        </div>
+
+    </form>
+    <div class="container js-file-list"></div>
+
+    <a asp-controller="Products" asp-route-id="">Trở về trang danh sách sản phẩm</a>
+</div>
+
+@section Scripts{
+
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+}
+

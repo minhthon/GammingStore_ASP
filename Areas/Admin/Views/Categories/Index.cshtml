@@ -1,0 +1,228 @@
+﻿@model DoAnASP.Areas.Admin.Models.Category
+@{
+    ViewData["Title"] = "Danh mục";
+}
+
+<!--Modal thong bao cap nhap trang thai-->
+<div class="modal fade" id="ms_updatestatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="modal-title" id="message"></p>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+          
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*modal xác nhận xóa danh mục*@
+
+
+
+@*modal hiển thị thông tin *@
+<div class="modal fade" id="details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thông tin danh mục </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Tên danh mục</p>
+                <p style="font-size:18px;text-align:center;color:black" name="name_details"></p>
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Hình ảnh</p>
+                <div class="container">
+                    <p name="img_details"></p>
+                </div>
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Trạng thái</p>
+                <p style="font-size:18px;text-align:center;color:black" name="status_details"></p>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*kết thúc modal hiển thị thông tin*@
+<p>
+    <a asp-action="Index">Tạo mới</a>
+</p>
+<section id="main-content">
+    <section class="wrapper">
+        <div style=" margin-bottom: 20px;" id="main-bottom" class="container main-bottom">
+            <div class="main-left-inner-fixed">
+                <partial name="Create" />
+            </div>
+        </div>
+        <div class="container">
+            <button type="button" class="button-toggle btn btn-outline-success btn-block" onClick="hiddenMainLeft();">
+                Hiện bảng thông tin để đăng nhập và chỉnh sửa
+            </button>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Tên Danh Mục
+                    </th>
+                    <th>
+                        Hình ảnh
+                    </th>
+                    <th>
+                        Trạng thái
+                    </th>
+                    <th>Chức năng</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Category item in ViewBag.ListCategory)
+                {
+                    <tr id="@item.IDCategory">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CategoryName)
+                        </td>
+                        <td>
+                            <img src="~/Image/ImageCategory/@Html.DisplayFor(modelItem => item.Image)" width="100px" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            <a style="width:100px" class="btn btn-outline-primary" asp-action="Index" asp-route-id="@item.IDCategory">Chỉnh sửa</a>
+                            <button style="width:100px" class="btn btn-outline-warning" name="btn_update_status" data-id="@item.IDCategory" data-status="@(item.Status==true? 0:1)" data-name="@item.CategoryName">
+                                @if (item.Status == true)
+                                {
+                                    @:Ẩn
+                                }
+                                else
+                                {
+                                    @:Hiện
+                                }
+                            </button>
+                            <button style="width:100px" class="btn btn-outline-danger" data-id="@item.IDCategory" name="btn_delete" data-name="@item.CategoryName" data-toggle="modal" data-target="#exampleModal">
+
+                                @{
+                                    @:Xóa
+                                }
+
+                            </button>
+                            <button style="width:100px" class="btn btn-outline-success" data-id="@item.IDCategory" name="btn_details" data-name="@item.CategoryName" data-toggle="modal" data-target="#details" onclick=test()>
+
+                                @{
+                                    @:Thông tin
+                                }
+                            </button>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </section>
+</section>
+@section Scripts{
+
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+       
+        function hiddenMainLeft() {
+            var hidden = document.getElementById('main-bottom');
+            if (hidden.style.display === 'none') hidden.style.display = 'block';
+            else hidden.style.display = 'none';
+        }
+        //script lấy thông tin danh mục
+        $('button[name=btn_details]').click(function () {
+            var id = $(this).attr('data-id');
+            $.ajax({
+                method: "GET",
+                url: "../api/Categories_API/GetCategory/" + id,
+                contentType: 'application/json; charset=UTF-8',
+                data: JSON.stringify({
+                    "IDCategory": id
+                })
+            })
+
+                .done(function (msg) {
+
+                    $('p[name=name_details]').html(msg.categoryName);
+                    if (msg.status == true) {
+                        $('p[name=status_details]').html("Hiện");
+                    }
+                    else {
+                        $('p[name=status_details]').html("Ẩn");
+                    }
+                    $('p[name=img_details]').html('<img style="margin-left: auto;margin-right: auto;display: block;" src="/Image/ImageCategory/' + msg.image + '"' + 'width = "300px" /> ');
+
+                    console.log(msg);
+                });
+
+
+        })
+        //script thay đổi trạng thái danh mục
+        $('button[name=btn_update_status]').click(function () {
+            var id = $(this).attr('data-id');
+            var stt = ($(this).attr('data-status') == 0 ? false : true)
+            $.ajax({
+                method: "POST",
+                url: "../api/Categories_API/UpdateStatus/",
+                contentType: 'application/json; charset=UTF-8',
+                data: JSON.stringify({
+                    "IDCategory": id,
+                    "Status": stt
+                })
+            })
+                .done(function (msg) {
+                    if (msg == '0') {
+                       
+                    }
+                    else {
+                        var r = JSON.parse(msg);
+                        if (r.stt == 'True') {
+                            $('button[name=btn_update_status][data-id=' + r.id + ']').html('Ẩn');
+                        }
+                        if (r.stt == 'False') {
+                            $('button[name=btn_update_status][data-id=' + r.id + ']').html('Hiện');
+                        }
+                        $('#ms_updatestatus').modal('show');
+                        $('p[id=message]').html('Thay đổi trạng thái danh mục thành công');
+                    }
+
+                });
+
+        })
+        //script xoa danh muc khoi he thong
+        $('button[name=btn_delete]').click(function () {
+            var id = $(this).attr('data-id');
+            var name = $(this).attr('data-name');
+            $.ajax({
+                method: "DELETE",
+                url: "../api/Categories_API/DeleteCategory/" + id,
+                contentType: 'application/json; charset=UTF-8',
+                data: JSON.stringify({
+                    "IDCategory": id
+                })
+            })
+                .done(function (msg) {
+                    if (msg == 'Success') {
+                        document.getElementById(id).remove();
+                        $('#ms_updatestatus').modal('show');
+                        $('p[id=message]').html('Xóa danh mục thành công');
+
+                    }
+                    else {
+
+                        alert('Xóa danh mục thất bại');
+                    }
+                });
+        })
+    </script>
+}

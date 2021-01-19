@@ -1,0 +1,181 @@
+﻿@model DoAnASP.Areas.Admin.Models.Payment
+
+<section id="main-content">
+    <section class="wrapper">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IDUser)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PaymentMethod)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ShippingUnit)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Note)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Address)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Cart)
+                    </th>
+                    <th>Trạng thái đơn hàng</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Payment item in ViewBag.Payment)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IDUser)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PaymentMethod)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ShippingUnit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Note)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td>Chưa hoàn thành</td>
+                        @{
+
+                            if (item.Status == 0)
+                            {
+                                <td><p name="Status" data-id="@item.IDPayment">Đang xử lý</p></td>
+                                <td><button class="btn btn-warning" id="@item.IDPayment" name="CancelOrther" data-id="@item.IDPayment">Hủy đơn hàng</button> </td>
+                                <td><button class="btn btn-primary "  id="@item.IDPayment" name="OrderConfirmation" data-id="@item.IDPayment">Xác nhận đơn hàng</button> </td>
+
+                            }
+                            if (item.Status == 1)
+                            {
+                                <td><p name="Confirm" data-id="@item.IDPayment">Đang giao</p></td>
+                                <td><button class="btn btn-primary" id="@item.IDPayment" name="CompleteTheOrther" data-id="@item.IDPayment">Xác nhận hoàn thành đơn hàng</button> </td>
+
+                            }
+                            if (item.Status == 2)
+                            {
+                                <td>Đã hoàn thành</td>
+                            }
+                            if (item.Status == 3)
+                            {
+                                <td>Đã hủy</td>
+                            }
+                        }
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </section>
+</section>
+
+
+    </section>
+@section Scripts{
+
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        //Hoàn tất đơn hàng
+        $('button[name=CompleteTheOrther]').click(function () {
+            var id = $(this).attr('data-id');
+
+            $.ajax({
+                method: "POST",
+                url: "/api/Payment_API/UpdateStatusCompleteTheOrther/",
+                contentType: 'application/json; charset=UTF-8',
+                data: JSON.stringify({
+                    "ID": id
+
+                })
+            })
+                .done(function (msg) {
+                    if (msg == 'Success') {
+                        alert('Đơn hàng đã được hoàn thành');
+                        $('p[name=Confirm][data-id=' + id + ']').html('Hoàn thành');
+                        document.getElementById(id).remove();
+                    }
+                    else {
+
+                        alert('Xác nhận đơn hàng thất bại');
+                    }
+
+                });
+
+        })
+        //Hoàn tất đơn hàng
+
+        //Xác nhận đơn hàng
+        $('button[name=OrderConfirmation]').click(function () {
+            var id = $(this).attr('data-id');
+
+            $.ajax({
+                method: "POST",
+                url: "/api/Payment_API/UpdateStatusOrderConfirmation/",
+                contentType: 'application/json; charset=UTF-8',
+                data: JSON.stringify({
+                    "ID": id
+
+                })
+            })
+                .done(function (msg) {
+                    if (msg == 'Success') {
+                        alert('Đơn hàng đã được xác nhận');
+                        $('p[name=Status][data-id=' + id + ']').html('Đang giao');
+                        $('button[name=OrderConfirmation][data-id=' + id + ']').html('Hoàn thành');
+                        document.getElementById(id).remove();
+                      
+                      
+                    }
+                    else {
+
+                        alert('Xác nhận đơn hàng thất bại');
+                    }
+
+                });
+
+        })
+        //Xác nhận đơn hàng
+
+        // Hủy đơn hàng
+        $('button[name=CancelOrther]').click(function () {
+            var id = $(this).attr('data-id');
+
+            $.ajax({
+                method: "POST",
+                url: "/api/Payment_API/UpdateStatusCancelOther/",
+                contentType: 'application/json; charset=UTF-8',
+                data: JSON.stringify({
+                    "ID": id
+
+                })
+            })
+                .done(function (msg) {
+                    if (msg == 'Success') {
+                        alert('Đơn hàng đã được hủy');
+                        $('p[name=Status][data-id=' + id + ']').html('Đã hủy');
+                        $('button[name=OrderConfirmation][data-id=' + id + ']').html('');
+                        document.getElementById(id).remove();
+                        
+                    }
+                    else {
+
+                        alert('Hủy đơn hàng thất bại');
+                    }
+
+                });
+
+        })
+                    // Hủy đơn hàng
+    </script>
+}

@@ -1,0 +1,341 @@
+﻿@model DoAnASP.Areas.Admin.Models.Product
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!--Modal thong bao cap nhap trang thai-->
+<div class="modal fade" id="ms_updatestatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="modal-title" id="message"></p>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*kết thúc modal xác nhận xóa *@
+@*modal hiển thị thông tin *@
+<div class="modal fade" id="details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width:1080px">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thông tin sản phẩm </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Tên sản phẩm</p>
+                <p style="font-size:18px;text-align:center;color:black" name="name_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Giá</p>
+                <p style="font-size:18px;text-align:center;color:black" name="price_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Phân loại</p>
+                <p style="font-size:18px;text-align:center;color:black" name="classify_details"></p>
+
+
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Hình ảnh</p>
+
+                <div class="container">
+                    <p name="img_details"></p>
+                    <p name="imgone_details"></p>
+                    <p name="imgtwo_details"></p>
+                </div>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Trạng thái</p>
+                <p style="font-size:18px;text-align:center;color:black" name="status_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Nhà sản xuất</p>
+                <p style="font-size:18px;text-align:center;color:black" name="producer_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Thời gian bảo hành</p>
+                <p style="font-size:18px;text-align:center;color:black" name="warrantyperiod_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Nguồn góc xuất xứ</p>
+                <p style="font-size:18px;text-align:center;color:black" name="origin_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">CPU</p>
+                <p style="font-size:18px;text-align:center;color:black" name="cpu_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">RAM</p>
+                <p style="font-size:18px;text-align:center;color:black" name="ram_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">VGA</p>
+                <p style="font-size:18px;text-align:center;color:black" name="vga_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Ổ đĩa</p>
+                <p style="font-size:18px;text-align:center;color:black" name="harddrive_details"></p>
+
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Màn hình</p>
+                <p style="font-size:18px;text-align:center;color:black" name="display_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Kết nối</p>
+                <p style="font-size:18px;text-align:center;color:black" name="connector_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Âm thanh</p>
+                <p style="font-size:18px;text-align:center;color:black" name="audio_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Wifi</p>
+                <p style="font-size:18px;text-align:center;color:black" name="wifi_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Bluetooth</p>
+                <p style="font-size:18px;text-align:center;color:black" name="bluetooth_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Pin</p>
+                <p style="font-size:18px;text-align:center;color:black" name="battery_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Cân nặng</p>
+                <p style="font-size:18px;text-align:center;color:black" name="weight_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Màu sắc</p>
+                <p style="font-size:18px;text-align:center;color:black" name="color_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Kích thước</p>
+                <p style="font-size:18px;text-align:center;color:black" name="size_details"></p>
+
+                <p style="color:blueviolet; font-size:24px;text-align:center;">Thông tin</p>
+                <p style="font-size:18px;text-align:center;color:black" name="description_details"></p>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*kết thúc modal hiển thị thông tin*@
+
+<section id="main-content">
+    <section class="wrapper">
+        <div style=" margin-bottom: 20px;" id="main-bottom" class="container main-bottom">
+            <div class="main-left-inner-fixed">
+                <partial name="Create" />
+            </div>
+        </div>
+        <div class="container">
+            <button type="button" class="button-toggle btn btn-outline-success btn-block" onClick="hiddenMainLeft();">
+                Hiện bảng thông tin để đăng nhập và chỉnh sửa
+            </button>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ProductName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Price)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Classify)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Image)
+                    </th>
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    string[] hinh;
+                }
+                @foreach (Product item in ViewBag.ListProduct)
+                {
+                    <tr id="@item.IDProduct">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProductName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Classify)
+                        </td>
+                        <td>
+                            @{
+                                try
+                                {
+                                    if (item.Image != null)
+                                    {
+                                        hinh = item.Image.ToString().Split(" ");
+                                        for (int i = 0; i < hinh.Length - 1 && i < 2; i++)
+                                        {
+                                        <td style="width:200px; height:100px">
+                                            <img src="~/Image/ImageProduct/@Html.DisplayFor(ModelItem=>hinh[i])" width="200px" height="100px" />
+                                        </td>
+                                    }
+
+                                }
+                            }
+                            catch { }
+                            }
+                            </td>
+
+
+                            <td>
+                                <a style="width:100px" class="btn btn-outline-primary" asp-action="Index" asp-route-id="@item.IDProduct">Chỉnh sửa</a>
+                                <button style="width:100px" class="btn btn-outline-warning" name="btn_update_status" data-id="@item.IDProduct" data-status="@(item.Status==0? 0:1)" data-name="@item.ProductName">
+                                    @if (item.Status == 1)
+                                    {
+                                        @:Ẩn
+                                    }
+                                    else
+                                    {
+                                        @:Hiện
+                                    }
+                                </button>
+                                <button style="width:100px" class="btn btn-outline-danger" data-id="@item.IDProduct" name="btn_delete_id" data-name="@item.ProductName" data-toggle="modal" data-target="#exampleModal">
+
+                                    @{
+                                        @:Xóa
+                                    }
+
+                                </button>
+                                <button style="width:100px" class="btn btn-outline-success" data-id="@item.IDProduct" name="btn_details" data-name="@item.ProductName" data-toggle="modal" data-target="#details" onclick=test()>
+
+                                    @{
+                                        @:Thông tin
+                                    }
+                                </button>
+                            </td>
+                        </tr>
+                    }
+            </tbody>
+        </table>
+    </section>
+
+</section>
+@section Scripts{
+
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        function hiddenMainLeft() {
+            var hidden = document.getElementById('main-bottom');
+            if (hidden.style.display === 'none') hidden.style.display = 'block';
+            else hidden.style.display = 'none';
+        }
+        //script lấy thông tin danh mục
+        $('button[name=btn_details]').click(function () {
+            var id = $(this).attr('data-id');
+            $.ajax({
+                method: "GET",
+                url: "../api/Product_API/GetProduct/" + id,
+                contentType: 'application/json; charset=UTF-8',
+                data: JSON.stringify({
+
+                })
+            })
+
+                .done(function (msg) {
+                    console.log(msg);
+                    image = msg.image.split(" ");
+
+                    $('p[name=name_details]').html(msg.productName);
+                    $('p[name=price_details]').html(msg.price);
+                    $('p[name=classify_details]').html(msg.classify);
+                    $('p[name=producer_details]').html(msg.producer);
+                    $('p[name=warrantyperiod_details]').html(msg.warrantyPeriod);
+                    $('p[name=origin_details]').html(msg.origin);
+                    $('p[name=cpu_details]').html(msg.cpu);
+                    $('p[name=ram_details]').html(msg.ram);
+                    $('p[name=vga_details]').html(msg.vga);
+                    $('p[name=harddrive_details]').html(msg.hard_drive);
+                    $('p[name=display_details]').html(msg.display);
+                    $('p[name=connector_details]').html(msg.connector);
+                    $('p[name=audio_details]').html(msg.audio);
+                    $('p[name=wifi_details]').html(msg.wifi);
+                    $('p[name=bluetooth_details]').html(msg.bluetooth);
+                    $('p[name=battery_details]').html(msg.battery);
+                    $('p[name=weight_details]').html(msg.weight);
+                    $('p[name=color_details]').html(msg.color);
+                    $('p[name=size_details]').html(msg.size);
+                    $('p[name=description_details]').html(msg.description);
+                    if (msg.status == 1) {
+                        $('p[name=status_details]').html("Hiện");
+                    }
+                    else {
+                        $('p[name=status_details]').html("Ẩn");
+                    }
+
+                    $('p[name=img_details]').html('<img style="width:720px; margin-left: auto;margin-right: auto;display: block;" src="/Image/ImageProduct/' + image[0] + '"' + ' /> ');
+                    $('p[name=imgone_details]').html('<img style="width:720px; margin-left: auto;margin-right: auto;display: block;" src="/Image/ImageProduct/' + image[1] + '"' + ' /> ');
+                    $('p[name=imgtwo_details]').html('<img style="width:720px; margin-left: auto;margin-right: auto;display: block;" src="/Image/ImageProduct/' + image[2] + '"' + ' /> ');
+                });
+
+
+        })
+        //script thay đổi trạng thái danh mục
+        $('button[name=btn_update_status]').click(function () {
+            var id = $(this).attr('data-id');
+            var stt = ($(this).attr('data-status') == 1 ? 0 : 1)
+            $.ajax({
+                method: "POST",
+                url: "../api/Product_API/UpdateStatus/",
+                contentType: 'application/json; charset=UTF-8',
+                data: JSON.stringify({
+                    "IDProduct": id,
+                    "Status": stt
+                })
+            })
+                .done(function (msg) {
+                    if (msg == '0') {
+                        $('#ms_updatestatus').modal('show');
+                        $('p[id=message]').html('Thay đổi trạng thái sản phẩm thất bại');
+                    }
+                    else {
+
+                        var r = JSON.parse(msg);
+                        console.log(r);
+                        if (r.stt == '1') {
+                            $('button[name=btn_update_status][data-id=' + r.id + ']').html('Ẩn');
+                        }
+                        if (r.stt == '0') {
+                            $('button[name=btn_update_status][data-id=' + r.id + ']').html('Hiện');
+                        }
+                        $('#ms_updatestatus').modal('show');
+                        $('p[id=message]').html('Thay đổi trạng thái danh mục thành công');
+                    }
+
+                });
+
+        })
+        //script xoa danh muc khoi he thong
+        $('button[name=btn_delete]').click(function () {
+            var id = $('button[name=btn_delete_id]').attr('data-id');
+            var name = $(this).attr('data-name');
+            $.ajax({
+                method: "DELETE",
+                url: "../api/Product_API/DeleteProduct/" + id,
+                contentType: 'application/json; charset=UTF-8',
+                data: JSON.stringify({
+                    "IDCategory": id
+                })
+            })
+                .done(function (msg) {
+                    if (msg == 'Success') {
+                        document.getElementById(id).remove();
+                        alert('Xóa danh mục thành công');
+                        $('#ms_updatestatus').modal('show');
+                        $('p[id=message]').html('Xóa sản phẩm thành công');
+                    }
+                    else {
+
+                        $('#ms_updatestatus').modal('show');
+                        $('p[id=message]').html('Xóa sản phẩm thất bại');
+                    }
+                });
+        })
+    </script>
+}

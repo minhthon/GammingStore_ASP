@@ -1,0 +1,80 @@
+﻿@model DoAnASP.Areas.Admin.Models.Account
+@{
+    ViewData["Title"] = "Create";
+}
+
+<label class="display_label">@(ViewContext.RouteData.Values["id"] != null ? "Chỉnh sửa tài khoản" : "Thêm tài khoản")</label>
+<hr />
+<div class="container">
+    <div class="row">
+       
+            <form style="width:100%" enctype="multipart/form-data" asp-action="@(ViewContext.RouteData.Values["id"] != null ? "Edit" : "Create")" asp-route-id="@(ViewContext.RouteData.Values["id"] != null ? ViewContext.RouteData.Values["id"] : "")">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @{
+                    if (ViewContext.RouteData.Values["id"] != null)
+                    {
+                        <input type="hidden" asp-for="Email" />
+                    }
+                }
+                @{
+                    if (ViewContext.RouteData.Values["id"] != null)
+                    {
+                        <div class="form-group">
+                            <label asp-for="Email" class="control-label display_label"></label>
+                            <input asp-for="Email" class="form-control" readonly />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group">
+                            <label asp-for="Email" class="control-label display_label"></label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    }
+                }
+                <div class="form-group">
+                    <label class="display_label">Mật khẩu</label>
+                    <input asp-for="Password" class="form-control display_label" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="display_label">Họ tên</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="display_label">Số điện thoại</label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="display_label">Địa chỉ</label>
+                    <input asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="display_label">Vai trò</label>
+                    <select style="width: 100%;height: calc(1.5em + .75rem + 2px)" asp-for="Role">
+                        <option value="Admin">Quản lý</option>
+                        <option value="User">Người dùng</option>
+                    </select>
+                    <span asp-validation-for="Role" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-check-label display_label">
+                        <label>Trạng thái</label>
+                        <input class="form-check-input" asp-for="Status" />
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="@(ViewContext.RouteData.Values["id"]!=null ?"Chỉnh sửa":"Tạo mới" )" class="btn btn-outline-primary btn-block" />
+                </div>
+            </form>
+        
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
